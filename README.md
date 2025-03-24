@@ -8,4 +8,5 @@ If you lose all of current time, you lose a life.
 If you lose all your lives, the game is over.
 ## Credits
 Programming and game design by Jonah Sagers
+
 Asset collecting by David Liu
