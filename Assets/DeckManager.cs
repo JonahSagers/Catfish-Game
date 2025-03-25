@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class DeckManager : MonoBehaviour
 {
@@ -60,6 +61,10 @@ public class DeckManager : MonoBehaviour
     void GameOver()
     {
         nextCard.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = gameOverSprite;
+        nextCard.transform.GetChild(3).localPosition += Vector3.up * 1.25f;
+        nextCard.transform.GetChild(3).GetComponent<TextMeshPro>().text = "Score: " + score;
+        nextCard.transform.GetChild(3).GetComponent<TextMeshPro>().fontSize = 8;
+        Destroy(nextCard.transform.GetChild(2).gameObject);
     }
 
     void Swipe(int direction)
@@ -69,8 +74,11 @@ public class DeckManager : MonoBehaviour
         rb.simulated = true;
         card.transform.parent = null;
         if(lives > 0){
-            if((card.tag == "Real" && direction > 0)){
-                health += 1;
+            if((card.tag == "Real" && direction > 0) || (card.tag == "Catfish" && direction < 0)){
+                score += 1;
+                if(card.tag == "Real"){
+                    health += 1;
+                }
             } else if((card.tag == "Catfish" && direction > 0)){
                 hearts[lives - 1].gameObject.SetActive(false);
                 health = 10;
