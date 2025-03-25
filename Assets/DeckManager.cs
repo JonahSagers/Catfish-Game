@@ -11,6 +11,11 @@ public class DeckManager : MonoBehaviour
     public int cardOffset;
     public float health;
     public Slider hpBar;
+    public int lives;
+    public List<Transform> hearts;
+    public Transform UI;
+    public Sprite gameOverSprite;
+    public float score;
 
     //scoring notes
     //swiping incorrectly loses time
@@ -37,12 +42,24 @@ public class DeckManager : MonoBehaviour
         if((Input.GetKeyUp(KeyCode.A) && cardOffset < 0) || (Input.GetKeyUp(KeyCode.D) && cardOffset > 0)){
             Swipe(cardOffset);
         }
-        card.transform.localPosition = Vector2.Lerp(card.transform.localPosition, Vector2.right * cardOffset, Time.deltaTime * 10);
+        card.transform.localPosition = Vector3.Lerp(card.transform.localPosition, Vector3.right * cardOffset - Vector3.forward, Time.deltaTime * 10);
         card.transform.rotation = Quaternion.Euler(0,0,card.transform.position.x * -5);
         card.transform.localScale = Vector3.Lerp(card.transform.localScale, Vector3.one * (Input.GetMouseButton(0) ? 0.9f : 1), Time.deltaTime * 10);
-        health -= Time.deltaTime;
-        health = Mathf.Clamp(health, 0, 10);
+        if(lives > 0){
+            health -= Time.deltaTime;
+            health = Mathf.Clamp(health, 0, 10);
+            if(hearts[lives - 1].localScale.x <= 0.4f){
+                hearts[lives - 1].localScale = Vector3.one * 0.45f;
+            } else {
+                hearts[lives - 1].localScale -= Vector3.one * Time.deltaTime * 0.06f;
+            }
+        }
         hpBar.value = health;
+    }
+
+    void GameOver()
+    {
+        nextCard.transform.GetChild(1).GetComponent<SpriteRenderer>().sprite = gameOverSprite;
     }
 
     void Swipe(int direction)
@@ -51,13 +68,27 @@ public class DeckManager : MonoBehaviour
         Rigidbody2D rb = card.GetComponent<Rigidbody2D>();
         rb.simulated = true;
         card.transform.parent = null;
-        if((card.tag == "Real" && direction > 0) || (card.tag == "Catfish" && direction < 0)){
-            health += 1;
-        } else if((card.tag == "Catfish" && direction > 0)){
-            health -= 10;
+        if(lives > 0){
+            if((card.tag == "Real" && direction > 0)){
+                health += 1;
+            } else if((card.tag == "Catfish" && direction > 0)){
+                hearts[lives - 1].gameObject.SetActive(false);
+                health = 10;
+                lives -= 1;
+                if(lives == 0){
+                    GameOver();
+                }
+            }
+        } else {
+            lives = 3;
+            health = 10;
+            score = 0;
+            foreach(Transform heart in hearts){
+                heart.gameObject.SetActive(true);
+            }
         }
         rb.AddTorque(-direction / 2 * Random.Range(1, 4), ForceMode2D.Impulse);
-        rb.AddForce(new Vector2(direction * 5 + Random.Range(-3, 3), 2 + Random.Range(-2, 2)), ForceMode2D.Impulse);
+        rb.AddForce(new Vector3(direction * 5 + Random.Range(-3, 3), 2 + Random.Range(-2, 2)), ForceMode2D.Impulse);
         StartCoroutine(FadeOut(card));
         DrawCard();
     }
@@ -65,11 +96,17 @@ public class DeckManager : MonoBehaviour
     void DrawCard()
     {
         card = nextCard;
-        nextCard = Instantiate(cardPre[0], transform);
+        card.transform.position -= transform.forward;
+        nextCard = Instantiate(cardPre[Random.Range(0, cardPre.Count - 1)], transform);
     }
 
     public IEnumerator FadeOut(GameObject target){
-        yield return new WaitForSeconds(2);
+        float elapsed = 0;
+        while(elapsed < 2){
+            target.transform.position -= transform.forward * Time.deltaTime;
+            elapsed += Time.deltaTime;
+            yield return 0;
+        }
         Destroy(target);
     }
 }
