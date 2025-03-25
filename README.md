@@ -1,6 +1,8 @@
 # Catfish-Game
 Made for GCC Mini-Game Jam Spring 2025, not for catfishing
 ## Gameplay
+"Catfish" refers to either a cat, fish, both, or a catfish.
+
 Swipe right to left to reject. Swipe left to right to accept.
 If you reject a catfish or accept a non-catfish card, you gain extra time.
 If you accept a catfish or reject a non-catfish card, you lose time.
