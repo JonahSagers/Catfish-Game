@@ -1,5 +1,8 @@
 # Catfish-Game
 Made for GCC Mini-Game Jam Spring 2025, not for catfishing
+
+###  [Now on itch.io!](https://jonahsagers.itch.io/catfish-speed-dating)
+
 ## Gameplay
 "Catfish" refers to either a cat, fish, both, or a catfish.
 
