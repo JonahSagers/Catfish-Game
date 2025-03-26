@@ -9,7 +9,7 @@ public class DeckManager : MonoBehaviour
     public List<GameObject> cardPre;
     public GameObject card;
     public GameObject nextCard;
-    public int cardOffset;
+    public float cardOffset;
     public float health;
     public Slider hpBar;
     public int lives;
@@ -34,13 +34,16 @@ public class DeckManager : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKeyDown(KeyCode.A)){
+        if(Input.GetKeyDown(KeyCode.A) || Input.GetKeyDown(KeyCode.LeftArrow)){
             cardOffset = -2;
         }
-        if(Input.GetKeyDown(KeyCode.D)){
+        if(Input.GetKeyDown(KeyCode.D) || Input.GetKeyDown(KeyCode.RightArrow)){
             cardOffset = 2;
         }
-        if((Input.GetKeyUp(KeyCode.A) && cardOffset < 0) || (Input.GetKeyUp(KeyCode.D) && cardOffset > 0)){
+        if(Input.GetMouseButton(0)){
+            cardOffset = Camera.main.ScreenToWorldPoint(new Vector3(Input.mousePosition.x, 0, 10)).x;
+        }
+        if(((Input.GetKeyUp(KeyCode.A) || Input.GetKeyUp(KeyCode.LeftArrow)) && cardOffset < 0) || ((Input.GetKeyUp(KeyCode.D) || Input.GetKeyUp(KeyCode.RightArrow)) && cardOffset > 0) || (Input.GetMouseButtonUp(0) && cardOffset != 0)){
             Swipe(cardOffset);
         }
         card.transform.localPosition = Vector3.Lerp(card.transform.localPosition, Vector3.right * cardOffset - Vector3.forward, Time.deltaTime * 10);
@@ -53,6 +56,9 @@ public class DeckManager : MonoBehaviour
                 hearts[lives - 1].localScale = Vector3.one * 0.45f;
             } else {
                 hearts[lives - 1].localScale -= Vector3.one * Time.deltaTime * 0.06f;
+            }
+            if(health <= 0){
+                Swipe(-2);
             }
         }
         hpBar.value = health;
@@ -67,25 +73,32 @@ public class DeckManager : MonoBehaviour
         Destroy(nextCard.transform.GetChild(2).gameObject);
     }
 
-    void Swipe(int direction)
+    void TakeDamage()
+    {
+        if(lives > 0){
+            hearts[lives - 1].gameObject.SetActive(false);
+            health = 10;
+            lives -= 1;
+            if(lives == 0){
+                GameOver();
+            }
+        }
+    }
+
+    void Swipe(float direction)
     {
         cardOffset = 0;
         Rigidbody2D rb = card.GetComponent<Rigidbody2D>();
         rb.simulated = true;
         card.transform.parent = null;
         if(lives > 0){
-            if((card.tag == "Real" && direction > 0) || (card.tag == "Catfish" && direction < 0)){
+            if((card.tag == "Real" && direction > 0) || (card.tag == "Catfish" && direction < 0 && health > 0)){
                 score += 1;
                 if(card.tag == "Real"){
                     health += 3;
                 }
-            } else if((card.tag == "Catfish" && direction > 0)){
-                hearts[lives - 1].gameObject.SetActive(false);
-                health = 10;
-                lives -= 1;
-                if(lives == 0){
-                    GameOver();
-                }
+            } else if((card.tag == "Catfish" && direction > 0) || health <= 0){
+                TakeDamage();
             }
         } else {
             lives = 3;
