@@ -186,12 +186,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardPre:
   - {fileID: 8950391854480771147, guid: 409d22fe6d2254890ac3c6740b1da175, type: 3}
+  - {fileID: 8950391854480771147, guid: cd6343044cfcd45f59698431bb8e601c, type: 3}
+  - {fileID: 8950391854480771147, guid: 9fbd5a84a712545938fd4221895f2415, type: 3}
+  - {fileID: 8950391854480771147, guid: dceaaae3991124b44820359fe1fb780b, type: 3}
+  - {fileID: 8950391854480771147, guid: b2fe4d48ddc934c8086967998b01a60f, type: 3}
+  - {fileID: 8950391854480771147, guid: 1eb1611ee8749493e9a66220e3c85a37, type: 3}
+  - {fileID: 8950391854480771147, guid: 5fef98fed46da482b9144c82c146e9a4, type: 3}
+  - {fileID: 8950391854480771147, guid: 381f720a02ccc4535b103f24514b5d41, type: 3}
+  - {fileID: 8950391854480771147, guid: 259322fc47254452abf9a07d0a9cb5d4, type: 3}
+  - {fileID: 8950391854480771147, guid: 43893f75addce434dbfc9b8f1696e947, type: 3}
+  - {fileID: 8950391854480771147, guid: 351e3de8e1c07484bb3f94b992cc43e8, type: 3}
+  - {fileID: 8950391854480771147, guid: 100ac2b36ca7f464fb5f51628d2487ef, type: 3}
+  - {fileID: 8950391854480771147, guid: 6d45a38845dcd42878dd465aee5d30c3, type: 3}
+  - {fileID: 8950391854480771147, guid: 797b7280c32794b7e8530c15e1d1cb83, type: 3}
+  - {fileID: 8950391854480771147, guid: 57f8bc9dd0b574d1f97ccda5fbb45b5d, type: 3}
+  - {fileID: 8950391854480771147, guid: 3add807731dc4464f9644e2deca10e37, type: 3}
   card: {fileID: 0}
   nextCard: {fileID: 609415737}
   cardOffset: 0
   health: 10
   hpBar: {fileID: 1582493533}
-  lives: 3
+  lives: 0
   hearts:
   - {fileID: 1628687576}
   - {fileID: 319346783}

@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 2809532490014612731}
   - component: {fileID: 8541813311668998126}
   m_Layer: 0
-  m_Name: Card 2
+  m_Name: Catfish 2
   m_TagString: Catfish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

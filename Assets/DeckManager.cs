@@ -77,7 +77,7 @@ public class DeckManager : MonoBehaviour
             if((card.tag == "Real" && direction > 0) || (card.tag == "Catfish" && direction < 0)){
                 score += 1;
                 if(card.tag == "Real"){
-                    health += 1;
+                    health += 3;
                 }
             } else if((card.tag == "Catfish" && direction > 0)){
                 hearts[lives - 1].gameObject.SetActive(false);

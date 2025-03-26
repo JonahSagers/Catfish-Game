@@ -412,7 +412,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 96c9eeaed1d6e460e8e1ede7a18e838d, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b3a6d9676b88b486595b179be355c87d, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -434,7 +434,7 @@ GameObject:
   - component: {fileID: 2809532490014612731}
   - component: {fileID: 8541813311668998126}
   m_Layer: 0
-  m_Name: Card 3
+  m_Name: Catfish 5
   m_TagString: Catfish
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
